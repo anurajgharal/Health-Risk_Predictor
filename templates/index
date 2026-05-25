@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        AI Lifestyle & Health Risk Predictor
+    </title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="glass-card">
+
+            <h1>
+                ❤️ AI Lifestyle & Health Risk Predictor
+            </h1>
+
+            <p class="subtitle">
+                Analyze your lifestyle and wellness using AI
+            </p>
+
+            <form action="/predict" method="POST">
+
+                <div class="form-grid">
+
+                    <!-- Gender -->
+
+                    <div class="input-box">
+
+                        <label>Gender</label>
+
+                        <select name="gender">
+
+                            <option
+                            {% if form_data and form_data.gender == 'Male' %}
+                            selected
+                            {% endif %}
+                            >
+                            Male
+                            </option>
+
+                            <option
+                            {% if form_data and form_data.gender == 'Female' %}
+                            selected
+                            {% endif %}
+                            >
+                            Female
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Age -->
+
+                    <div class="input-box">
+
+                        <label>Age</label>
+
+                        <input
+                            type="number"
+                            name="age"
+                            value="{{ form_data.age if form_data else '' }}"
+                            required>
+
+                    </div>
+
+                    <!-- Occupation -->
+
+                    <div class="input-box">
+
+                        <label>Occupation</label>
+
+                        <select name="occupation">
+
+                            <option>Student</option>
+                            <option>Engineer</option>
+                            <option>Doctor</option>
+                            <option>Teacher</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Sleep Duration -->
+
+                    <div class="input-box">
+
+                        <label>
+                            Sleep Duration (Hours)
+                        </label>
+
+                        <input
+                            type="number"
+                            step="0.1"
+                            name="sleep_duration"
+                            value="{{ form_data.sleep_duration if form_data else '' }}"
+                            required>
+
+                    </div>
+
+                    <!-- Sleep Quality -->
+
+                    <div class="input-box">
+
+                        <label>
+                            Sleep Quality (1-10)
+                        </label>
+
+                        <input
+                            type="number"
+                            min="1"
+                            max="10"
+                            name="quality_of_sleep"
+                            value="{{ form_data.quality_of_sleep if form_data else '' }}"
+                            required>
+
+                    </div>
+
+                    <!-- Physical Activity -->
+
+                    <div class="input-box">
+
+                        <label>
+                            Physical Activity Level
+                        </label>
+
+                        <input
+                            type="number"
+                            min="1"
+                            max="10"
+                            name="physical_activity"
+                            value="{{ form_data.physical_activity if form_data else '' }}"
+                            required>
+
+                    </div>
+
+                    <!-- Stress -->
+
+                    <div class="input-box">
+
+                        <label>
+                            Stress Level
+                        </label>
+
+                        <input
+                            type="number"
+                            min="1"
+                            max="10"
+                            name="stress_level"
+                            value="{{ form_data.stress_level if form_data else '' }}"
+                            required>
+
+                    </div>
+
+                    <!-- BMI -->
+
+                    <div class="input-box">
+
+                        <label>BMI Category</label>
+
+                        <select name="bmi_category">
+
+                            <option>Normal</option>
+                            <option>Overweight</option>
+                            <option>Obese</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- BP -->
+
+                    <div class="input-box">
+
+                        <label>Blood Pressure</label>
+
+                        <select name="blood_pressure">
+
+                            <option>Normal</option>
+                            <option>High</option>
+                            <option>Low</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Heart Rate -->
+
+                    <div class="input-box">
+
+                        <label>Heart Rate</label>
+
+                        <input
+                            type="number"
+                            name="heart_rate"
+                            value="{{ form_data.heart_rate if form_data else '' }}"
+                            required>
+
+                    </div>
+
+                    <!-- Steps -->
+
+                    <div class="input-box">
+
+                        <label>Daily Steps</label>
+
+                        <input
+                            type="number"
+                            name="daily_steps"
+                            value="{{ form_data.daily_steps if form_data else '' }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <button type="submit">
+                    Analyze Health Risk
+                </button>
+
+            </form>
+
+            {% if prediction_text %}
+
+            <div class="result-card">
+
+                <h2>{{ prediction_text }}</h2>
+
+                <h3>
+                    Health Score:
+                    {{ score }}
+                </h3>
+
+                <div class="tips">
+
+                    <h4>Suggestions</h4>
+
+                    <ul>
+
+                        {% for tip in suggestions %}
+
+                        <li>{{ tip }}</li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
